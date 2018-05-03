@@ -32,7 +32,7 @@ $(if chap-id)
 	<form name="sendin" action="$(link-login-only)" method="post">
 		<input type="hidden" name="username" />
 		<input type="hidden" name="password" />
-		<input type="hidden" name="dst" value="$(link-orig)" />
+		<input type="hidden" name="dst" value="https://google.co.za" />
 		<input type="hidden" name="popup" value="true" />
 	</form>
 
@@ -49,9 +49,9 @@ $(if chap-id)
 	</script>
 $(endif)
 
-<div align="center">
+<!-- <div align="center">
 <a href="$(link-login-only)?target=lv&amp;dst=$(link-orig-esc)">Latviski</a>
-</div>
+</div> -->
 
 <!-- <table width="100%" style="margin-top: 10%;">
 	<tr>
@@ -86,6 +86,33 @@ $(endif)
 	</td>
 	</tr>
 </table> -->
+<script type="text/javascript">
+  function getParameterByName(name, url) {
+    try{
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+         results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    } catch (error){
+      console.log(error)
+      return false
+    }
+	}
+	// Give the parameter a variable name
+  try {
+    var dynamicName = getParameterByName('name');
+    var dynamicPassword = getParameterByName('password');
+    document.getElementById("userspan").innerHTML=dynamicName;
+    document.getElementById("passspan").innerHTML=dynamicPassword;
+    document.getElementById("justregistered").style.display = 'block';
+  } catch(error){
+    console.log("Could not find username and password")
+  }
+
+</script>
 
 <div class="container-fluid">
 	<section>
@@ -94,6 +121,9 @@ $(endif)
 				<div class="card-wrapper justify-content-md-center" style="width:450px">
           <div class="text-center">
 					       <img class="text-center" src="/img/icon.png">
+          </div>
+          <div class="text-center" id="justregistered" style="display:none;">
+            <h6>Thank you for registering, your username is: <spanid="userspan"></span> and your password is: <span id="passspan"></span></h6>
           </div>
           <h6 class="notice text-center">Please log on to use the internet hotspot service<br />$(if trial == 'yes')Free trial available, <a style="color: #FF8080"href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">click here</a>.$(endif)</h6><br />
 
@@ -111,27 +141,29 @@ $(endif)
 									<input id="password" type="password" class="form-control" name="password" required data-eye>
 								</div>
 								<div class="form-group no-margin">
-                  <input type="hidden" name="dst" value="$(link-orig)" />
+                  <input type="hidden" name="dst" value="https://google.co.za" />
                   <input type="hidden" name="popup" value="true" />
 									<button type="submit" class="btn btn-primary btn-block">
 										Login
 									</button>
 								</div>
 								<div class="margin-top20 text-center">
-									Need an account? <a href="https://igaguradiusweb.divisionbyzero.co.za/register">Register</a>
+									Need an account? <a href="https://igaguradiusweb.divisionbyzero.co.za/register">Register</a><br>
+                  Can't Login? <a href="https://igaguradiusweb.divisionbyzero.co.za/forgotpassword">Retrieve password</a>
 								</div>
 							</form>
 
 						</div>
-					</div>
-					<div class="footer text-center">
-						Copyright &copy; 2018 &mdash; Igagu Communications
 					</div>
           $(if error)
             <div class="text-center" >
               <h6>$(error)</h6>
             </div>
           $(endif)
+					<div class="footer text-center">
+						Copyright &copy; 2018 &mdash; Igagu Communications
+					</div>
+
 				</div>
 			</div>
 		</div>
